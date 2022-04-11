@@ -38,7 +38,7 @@ public class Gasto {
  
 	@Enumerated(EnumType.STRING)
 	@Column(name="TP_CATEGORIA")
-    private String categoria ; 
+    private CategoriaEnum categoria ; 
  
 	@Column(name="DT_GASTO")
     private LocalDate data;
