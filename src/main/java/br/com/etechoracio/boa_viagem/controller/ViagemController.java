@@ -3,7 +3,6 @@ package br.com.etechoracio.boa_viagem.controller;
 import java.util.List;
 import java.util.Optional;
 
-import org.apache.catalina.startup.ClassLoaderFactory.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,23 +15,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.etechoracio.boa_viagem.entity.Gasto;
-import br.com.etechoracio.boa_viagem.repository.GastoRepository;
+import br.com.etechoracio.boa_viagem.entity.Viagem;
+import br.com.etechoracio.boa_viagem.repository.ViagemRepository;
 
 @RestController
-@RequestMapping("/gastos")
-public class GastoController {
-
-	@Autowired
-	private GastoRepository repository;
+@RequestMapping("/viagem")
+public class ViagemController {
 	
+	@Autowired
+	private ViagemRepository repository;
+
 	@GetMapping
-	public List<Gasto> listarTodos(){
+	public List<Viagem> listarTodos(){
 	return repository.findAll();
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Gasto> buscarPorID(@PathVariable long id) {
-		Optional<Gasto> existe = repository.findById(id); 
+	public ResponseEntity<Viagem> buscarPorID(@PathVariable long id) {
+		Optional<Viagem> existe = repository.findById(id); 
 		
 		if(existe.isPresent()) {
 			return ResponseEntity.ok(existe.get());
@@ -42,7 +42,7 @@ public class GastoController {
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Gasto> deletarID(@PathVariable long id) {
+	public ResponseEntity<Viagem> deletarID(@PathVariable long id) {
 		boolean existe = repository.existsById(id);
 		if(existe) {
 			 repository.deleteById(id);
@@ -52,15 +52,16 @@ public class GastoController {
 		
 	}
 	
+	
 	@PostMapping
- 	public ResponseEntity<Gasto> inserir(@RequestBody Gasto obj) {
+ 	public ResponseEntity<Viagem> inserir(@RequestBody Viagem obj) {
  		repository.save(obj);
  		return ResponseEntity.ok(obj);
- 	
- 		
- 	}
+	}
+	
+	
 	@PutMapping("/{id}")
-	public ResponseEntity<Gasto> atualizar(@PathVariable Long id,@RequestBody Gasto gasto) {
+	public ResponseEntity<Viagem> atualizar(@PathVariable Long id,@RequestBody Viagem viagem) {
 		boolean existe = repository.existsById(id);
 		
 		if(!existe) {
@@ -68,13 +69,9 @@ public class GastoController {
 			 
 		}
 		
-		repository.save(gasto);
-		return ResponseEntity.ok(gasto);
+		repository.save(viagem);
+		return ResponseEntity.ok(viagem);
 		
 	}
 	
-	
-	
-	
-	
-	}
+}
