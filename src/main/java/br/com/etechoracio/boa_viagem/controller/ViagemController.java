@@ -14,9 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.etechoracio.boa_viagem.entity.Gasto;
 import br.com.etechoracio.boa_viagem.entity.Viagem;
-import br.com.etechoracio.boa_viagem.repository.ViagemRepository;
 import br.com.etechoracio.boa_viagem.service.ViagemService;
 
 @RestController
