@@ -1,3 +1,4 @@
+
 package br.com.etechoracio.boa_viagem.service;
 
 import java.util.List;
@@ -44,7 +45,7 @@ public class GastoService {
 		
 		
 		Optional<Viagem> viagem = viagemRepository.findById(obj.getViagem().getId());
-		Optional<Gasto> gasto = repository.findById(obj.getViagem().getId());
+		
 		
 		if(!viagem.isPresent()) {
 			throw new RuntimeException("Viagem não encontrada");
@@ -52,7 +53,7 @@ public class GastoService {
 		if(viagem.get().getSaida() != null) {
 			throw new RuntimeException("Viagem já foi fechada");
 		}
-		if(!viagem.get().getChegada().isAfter(gasto.get().getData()))
+		if(!viagem.get().getChegada().isAfter(obj.getData()))
 		{
 			throw new RuntimeException("Data do gasto for anterior à data de entrada da viagem");
 	 			
@@ -60,21 +61,22 @@ public class GastoService {
 		return repository.save(obj); 
 	}
 	
+	
 	public  Optional<Gasto> atualizar( Long id, Gasto gasto) {
 		
 		boolean existe = repository.existsById(id);
 		Optional<Viagem> viagem = viagemRepository.findById(gasto.getViagem().getId());
-		Optional<Gasto> gastoo = repository.findById(gasto.getViagem().getId());
+		
 		
 		if(!existe) {
 			 return Optional.empty();
 			 
 		}
-		if(!gastoo.get().getViagem().getId().equals( viagem.get().getId())) {
+		if(!gasto.getViagem().getId().equals( viagem.get().getId())) {
 			throw new RuntimeException("Viagem de atualização não for a mesma viagem da inserção");
 		}
 		
-		if(!viagem.get().getChegada().isAfter(gastoo.get().getData())) {
+		if(!viagem.get().getChegada().isAfter(gasto.getData())) {
 			throw new RuntimeException("Data do gasto for anterior à data de entrada da viagem");
 		}
 		return Optional.of(repository.save(gasto));
